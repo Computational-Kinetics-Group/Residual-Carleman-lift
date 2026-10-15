@@ -1,0 +1,17 @@
+{
+  "protocol": "Minimum nonlinear mode count among tested K passing peak C1 error tolerance; DSL pilot32/16 only. Both transfers are hypotheses.",
+  "selections": [
+    {
+      "tolerance_percent": 5.0,
+      "coarse_K": 11,
+      "same_physical_K": 11,
+      "same_fraction_K": 22
+    },
+    {
+      "tolerance_percent": 1.0,
+      "coarse_K": 14,
+      "same_physical_K": 14,
+      "same_fraction_K": 28
+    }
+  ]
+}

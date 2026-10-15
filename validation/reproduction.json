@@ -1,0 +1,22 @@
+{
+  "pilot": {
+    "max_abs_difference": 0.0,
+    "rtol": 1e-07,
+    "atol": 1e-09
+  },
+  "RC2_history": {
+    "max_abs_difference": 6.106226635438361e-16,
+    "rtol": 1e-07,
+    "atol": 1e-09
+  },
+  "snapshots": {
+    "max_abs_difference": 2.220446049250313e-16,
+    "rtol": 1e-07,
+    "atol": 1e-10
+  },
+  "conventional_baseline": {
+    "max_abs_difference": 0.0,
+    "rtol": 1e-07,
+    "atol": 1e-09
+  }
+}

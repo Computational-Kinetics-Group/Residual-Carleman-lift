@@ -1,0 +1,11 @@
+{
+  "source_archive": "Spectral_Preparation_Code_and_Data.zip",
+  "original_files_preserved_unchanged": true,
+  "file_count": 59,
+  "manuscript_data_source": "Carleman_LBM_PRL_Draft_v6.zip",
+  "new_entrypoints": [
+    "reproduce.py",
+    "validate.py",
+    "compare_reproduction.py"
+  ]
+}

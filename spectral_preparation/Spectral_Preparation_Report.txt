@@ -1,0 +1,223 @@
+SPECTRAL PREPARATION OF THE DOUBLE-SHEAR RESIDUAL
+Fixed fine grid64², Re=100,000, U=.08, final t*=3
+
+MAIN NUMERICAL FINDINGS
+K=12 retains10.77% of fine Fourier modes: C2 final error48.6331%, velocity46.3316%, vorticity356.415%.
+K=14 retains14.97% of fine Fourier modes: C2 final error31.7445%, velocity30.2527%, vorticity222.468%.
+K=22 retains37.04% of fine Fourier modes: C2 final error1.86639%, velocity1.80371%, vorticity11.7702%.
+K=28 retains59.89% of fine Fourier modes: C2 final error0.135827%, velocity0.130884%, vorticity0.904451%.
+These measured changes isolate spectral preparation, not a change to the lift.
+Both spectral-fraction transfers pass their fine C1 tolerances; both same-physical-cutoff transfers fail. This is one-flow empirical validation, not a bound or a universal scaling law.
+At K28 the final C2 vorticity error is below1%, while its final population error is about0.136%; the original K12 failure is therefore not a decisive limitation of C2 with better preparation. The nonlinear predictor now retains about60% of fine Fourier modes.
+K22: omitted cubic first-return RMS is reduced by31.6 times relative to K12; final C2 error is reduced by26.1 times. These ratios are diagnostic observations, not a fitted error law.
+K28: omitted cubic first-return RMS is reduced by390 times relative to K12; final C2 error is reduced by358 times. These ratios are diagnostic observations, not a fitted error law.
+
+QUESTION AND DESIGN
+Does the background need a larger spectral cutoff before judging C2?
+The fine LB reference, initial state, relaxation rate, time horizon, spatial
+Carleman pairs, forcing couplings and C2 truncation are held fixed. Only K in
+ c_next=P_K F(c)+(I-P_K)b_next
+changes. The original six-field regularized D2Q9 formulation is retained.
+Coarse b is Fourier-prolonged and linearly interpolated from32². Relaxation
+is scaled with lattice size: tau_N=.5+3 U N/Re. All runs have2400 fine steps.
+These are original C2 runs, without the subsequently explored C1-centering
+closure. No lift resets, rank compression, nonlinear fine-reference feedback,
+measurements or quantum execution are used.
+
+COARSE-ONLY PILOT AND PREDECLARED TRANSFERS
+The previous cutoff calibration concerned perturbed Taylor-Green. We repeated
+it for DOUBLE SHEAR on32/16 before examining the new64² sweep. An initial
+seven-cutoff pilot was expanded to every integer K=0,...,14 to avoid missing
+nonmonotone candidates. The authoritative selection is from that expanded set.
+Score: peak C1 population error over all1200 pilot time steps, relative to the
+independent32² nonlinear reference. Choose the fewest nonlinear Fourier modes
+passing5% or1%. The32² reference is a coarse diagnostic for the64² deployment.
+Selections were written before starting fine-grid validation. No fine-grid
+results enter the selections. These tolerances calibrate C1, not Carleman error.
+Two distinct, explicitly hypothesized transfers are tested:
+ (a) preserve physical wavenumber K;
+ (b) preserve K/N, so double K when going from32 to64.
+The second rule preserves roughly the nonlinear mode fraction, not the same
+physical wavelength. It is a tested heuristic, not a derived transfer theorem.
+The pilot requires two nonlinear base trajectories PLUS candidate projected
+predictors and corrector diagnostics; it is not literally just two simulations.
+{
+  "protocol": "Minimum nonlinear mode count among tested K passing peak C1 error tolerance; DSL pilot32/16 only. Both transfers are hypotheses.",
+  "selections": [
+    {
+      "tolerance_percent": 5.0,
+      "coarse_K": 11,
+      "same_physical_K": 11,
+      "same_fraction_K": 22
+    },
+    {
+      "tolerance_percent": 1.0,
+      "coarse_K": 14,
+      "same_physical_K": 14,
+      "same_fraction_K": 28
+    }
+  ]
+}
+
+TRANSFER VALIDATION (C1 PEAK SCORE)
+ tolerance_percent  coarse_K                   rule  fine_K  fine_C1_peak  passes_C1_tolerance
+               5.0        11        same physical K      11     43.690565                False
+               5.0        11 same spectral fraction      22      3.210329                 True
+               1.0        14        same physical K      14     24.599998                False
+               1.0        14 same spectral fraction      28      0.366483                 True
+
+FINE-GRID SWEEP AND C2 TESTS
+Fine classical sweep: K=0,8,11,12,14,16,20,22,24,26,28,46.
+K46 contains the full64² Fourier lattice and is a trivial exact-background
+sanity check, not a proposed useful hybrid. C2 is evaluated at K14,K22,K28,
+with prior K12 retained as the baseline. K22 andK28 come from the coarse-only
+fraction-preserving selections; K14 is the physical-cutoff1% selection.
+No C2 result is claimed for the other sweep cutoffs, and no global optimum is
+claimed. C1 and the nonlinear quadratic comparator in these C2 runs reproduce
+the independently vectorized sweep; fine-reference snapshots match exactly.
+
+C2 RESULTS (PERCENT ERRORS)
+ K  nonlinear_dof  nonlinear_fraction  background_peak   C1_peak  C1_final   C2_peak  C2_final  quadratic_final  C2_to_quadratic_final  C2_velocity_error  C2_vorticity_error  C2_vorticity_correlation  C2_enstrophy_ratio  cubic_return_rms_D0
+12           2646            0.107666        12.746739 14.166273 14.140118 48.633051 48.633051         0.009088              48.632423          46.331640          356.415015                  0.278096           13.766843         2.655143e-05
+14           3678            0.149658        11.620753 24.599998 24.599998 31.744547 31.744547         0.005419              31.744550          30.252696          222.468483                  0.404675            5.918150         1.779244e-05
+22           9102            0.370361         4.025205  3.210329  3.210329  2.021677  1.866386         0.000293               1.866215           1.803710           11.770210                  0.993211            1.022399         8.414036e-07
+28          14718            0.598877         1.751525  0.366483  0.366330  0.135901  0.135827         0.000025               0.135817           0.130884            0.904451                  0.999959            1.000557         6.802516e-08
+
+ERROR DEFINITIONS AND SOURCE DIAGNOSTIC
+D0=||a_initial-rest|| in six orthonormal population moments. Population errors
+are100||a-a_fine||/D0, not percentages of total populations including rest density.
+Velocity and vorticity errors use their CURRENT fine-reference norms.
+The quadratic residual comparator is evolved nonlinearly and independently.
+Its negligible error versus full fine LB distinguishes physical cubic-and-higher
+Taylor terms from truncation of the Carleman hierarchy.
+Along its trajectory, let a=A r and q=B[r,r]. The omitted degree-two-sector
+sources are S3=a tensor q+q tensor a and S4=q tensor q. We measure B_next[S3]
+and B_next[S4], their FIRST return to populations, using streamed bilinear
+contractions without dense tensors. This return enters r at n+2 from a source
+formed at n. RMS uses uniform diagnostic samples, not an accumulated-error
+identity or an adjoint sensitivity ranking. No diagnostic source feeds C2.
+
+MODE COUNTS, AUTONOMY AND COST
+P_K is a radial disk in integer Fourier wavenumber, applied to all six fields.
+Nonlinear spectral DOF=6 times the number of retained Fourier indices; this is
+a real-DOF count using conjugate symmetry, not an actual optimized runtime cost.
+The full fine dimension is6*64²=24576. A larger K transfers more dynamics into
+the nonlinear predictor. The experimental implementation evaluates F on the
+full fine lattice then projects; it is not a reduced-cost spectral solver.
+For K28 the coarse32 support is entirely inside P_K, so its signal cancels and
+the predictor is autonomous P_K F(c), with initial P_K f0. At K22 only coarse
+corner modes beyond22 remain; at K12 and14 a larger coarse tail survives.
+No quantum-cost or classical-speedup claim is inferred from these accuracy tests.
+
+FINE CLASSICAL SCORES
+ N  Nc  K  mode_count  nonlinear_dof  nonlinear_fraction  background_peak  background_final      C1_peak     C1_final  quadratic_peak  quadratic_final       C1_rms  cubic_return_rms_D0  quartic_return_rms_D0  min_background_density
+64  32  0           1              6            0.000244     1.492793e+01      7.339528e+00 1.114211e+01 8.610442e+00    9.095347e-03     9.095347e-03 5.667829e+00         6.206696e-06           3.375671e-08                0.965977
+64  32  8         197           1182            0.048096     1.118409e+01      9.955677e+00 1.475742e+01 1.475742e+01    5.278508e-03     3.734656e-03 5.408431e+00         1.210770e-05           4.559343e-08                0.964897
+64  32 11         377           2262            0.092041     2.366047e+01      2.013264e+01 4.369057e+01 4.369057e+01    2.914045e-02     2.914045e-02 1.544179e+01         6.481359e-05           3.981460e-07                0.966186
+64  32 12         441           2646            0.107666     1.274674e+01      1.121029e+01 1.416627e+01 1.414012e+01    9.087515e-03     9.087515e-03 7.590512e+00         2.655143e-05           1.556537e-07                0.964176
+64  32 14         613           3678            0.149658     1.162075e+01      1.050518e+01 2.460000e+01 2.460000e+01    5.418875e-03     5.418875e-03 8.900711e+00         1.779244e-05           9.319182e-08                0.964446
+64  32 16         797           4782            0.194580     1.359380e+01      1.159211e+01 2.373765e+01 2.373765e+01    5.989795e-03     5.256221e-03 7.143370e+00         1.910109e-05           1.005004e-07                0.965019
+64  32 20        1257           7542            0.306885     6.973488e+00      6.973488e+00 7.676703e+00 7.676703e+00    1.211730e-03     1.211730e-03 2.733423e+00         4.994070e-06           2.360354e-08                0.965180
+64  32 22        1517           9102            0.370361     4.025205e+00      3.258010e+00 3.210329e+00 3.210329e+00    2.935882e-04     2.934472e-04 1.102485e+00         8.414036e-07           2.395303e-09                0.965190
+64  32 24        1793          10758            0.437744     3.677417e+00      3.412664e+00 1.462431e+00 1.414185e+00    2.211390e-04     2.211390e-04 6.028295e-01         5.031368e-07           1.052010e-09                0.965202
+64  32 26        2121          12726            0.517822     2.766973e+00      1.999276e+00 1.007872e+00 9.962707e-01    9.127328e-05     9.127328e-05 3.853126e-01         2.556465e-07           4.458879e-10                0.965177
+64  32 28        2453          14718            0.598877     1.751525e+00      1.538530e+00 3.664834e-01 3.663303e-01    2.477521e-05     2.477521e-05 1.450062e-01         6.802516e-08           7.421187e-11                0.965203
+64  32 46        4096          24576            1.000000     1.816067e-09      1.816067e-09 1.814501e-09 1.814501e-09    1.814501e-09     1.814501e-09 3.155147e-10         2.290606e-39           1.050928e-52                0.965199
+
+PILOT CLASSICAL SCORES
+ N  Nc  K  mode_count  nonlinear_dof  nonlinear_fraction  background_peak  background_final    C1_peak   C1_final  quadratic_peak  quadratic_final    C1_rms  cubic_return_rms_D0  quartic_return_rms_D0  min_background_density
+32  16  0           1              6            0.000977        34.807548         16.748943  37.162345  37.162345        0.347098         0.347098 22.565876         2.790477e-04           4.004477e-06                0.974011
+32  16  1           5             30            0.004883        32.701507         14.687288  40.705628  40.705628        0.348515         0.348515 23.079229         2.732271e-04           3.883014e-06                0.974011
+32  16  2          13             78            0.012695        31.539424         16.417494  59.658106  59.658106        0.325958         0.325958 27.412398         2.628543e-04           3.708432e-06                0.973750
+32  16  3          29            174            0.028320        30.478015         20.435738  53.369900  53.369900        0.289642         0.289420 25.919478         2.608988e-04           3.628352e-06                0.974388
+32  16  4          49            294            0.047852        37.959042         36.328025  44.231582  28.039003        0.111937         0.092592 24.630816         2.785052e-04           3.063191e-06                0.971731
+32  16  5          81            486            0.079102        33.518783         33.518783 106.206129 106.206129        0.358054         0.356229 53.033535         3.260646e-04           4.241653e-06                0.973778
+32  16  6         113            678            0.110352        38.590917         38.127644 181.341973 181.341973        0.103144         0.103144 56.044881         4.599965e-04           5.752664e-06                0.965584
+32  16  7         149            894            0.145508        49.161059         40.727938  63.825505  63.825505        0.281177         0.252515 33.125145         6.441978e-04           9.074353e-06                0.976136
+32  16  8         197           1182            0.192383        33.531651         33.531651  59.459987  59.459987        0.079815         0.079815 19.823673         2.323456e-04           2.991441e-06                0.966347
+32  16  9         253           1518            0.247070        23.517644         23.150847  21.156155  21.092580        0.032892         0.032065  8.540537         1.066930e-04           9.973654e-07                0.968119
+32  16 10         317           1902            0.309570         9.866976          9.488808   5.416437   5.416437        0.002644         0.002627  2.003714         9.840165e-06           4.879852e-08                0.966322
+32  16 11         377           2262            0.368164         7.276452          7.276452   2.377145   2.377145        0.001092         0.001066  1.189372         4.877050e-06           2.048912e-08                0.966260
+32  16 12         441           2646            0.430664         7.018712          5.627157   3.415719   3.415719        0.000948         0.000948  1.046268         3.136724e-06           1.058156e-08                0.965997
+32  16 13         529           3174            0.516602         5.815028          5.674666   1.299131   1.299131        0.000350         0.000309  0.459562         1.216752e-06           3.014547e-09                0.965794
+32  16 14         613           3678            0.598633         4.645742          4.645565   0.876059   0.876059        0.000168         0.000168  0.375521         7.634147e-07           1.705746e-09                0.965939
+
+ERROR HORIZONS
+ K model  tolerance_percent  first_crossing
+12    C1                0.1         0.69875
+12    C1                1.0         1.01875
+12    C1                5.0         1.51375
+12    C1               10.0         2.22125
+12    C2                0.1         0.94750
+12    C2                1.0         1.18250
+12    C2                5.0         1.80625
+12    C2               10.0         2.19875
+14    C1                0.1         0.80250
+14    C1                1.0         1.14500
+14    C1                5.0         1.69500
+14    C1               10.0         2.18500
+14    C2                0.1         1.04500
+14    C2                1.0         1.33125
+14    C2                5.0         1.75375
+14    C2               10.0         2.24500
+22    C1                0.1         1.52625
+22    C1                1.0         2.20500
+22    C1                5.0             NaN
+22    C1               10.0             NaN
+22    C2                0.1         1.87625
+22    C2                1.0         2.52000
+22    C2                5.0             NaN
+22    C2               10.0             NaN
+28    C1                0.1         2.14500
+28    C1                1.0             NaN
+28    C1                5.0             NaN
+28    C1               10.0             NaN
+28    C2                0.1         2.77750
+28    C2                1.0             NaN
+28    C2                5.0             NaN
+28    C2               10.0             NaN
+
+NUMERICAL CHECKS
+{
+  "K12_C1_agreement_pp": 2.6645352591003757e-14,
+  "K12_quadratic_agreement_pp": 1.0061396160665481e-16,
+  "K12_reference_difference": 0.0,
+  "K14_C1_agreement_pp": 3.197442310920451e-14,
+  "K14_quadratic_agreement_pp": 9.974659986866641e-17,
+  "K14_reference_difference": 0.0,
+  "K22_C1_agreement_pp": 6.217248937900877e-15,
+  "K22_quadratic_agreement_pp": 1.2197274440461925e-19,
+  "K22_reference_difference": 0.0,
+  "K28_C1_agreement_pp": 8.326672684688674e-16,
+  "K28_quadratic_agreement_pp": 4.2351647362715017e-20,
+  "K28_reference_difference": 0.0,
+  "pilot_K12_C1_agreement_pp": 4.884981308350689e-15,
+  "pilot_K12_quadratic_agreement_pp": 4.0657581468206416e-20,
+  "full_projector_max_background_error_percent": 1.8160669734551143e-09
+}
+
+LIMITS
+One double-shear initial condition, Re=100,000,64² fine grid and finite horizon.
+Same-lattice LB fidelity, not resolved continuum DNS. Passing a coarse C1
+threshold does not certify fine C1 or C2 error. Fine-grid source diagnostics
+validate the candidate choice but are not operational coarse-only inputs.
+The comparison does not establish that the retained nonlinear fraction remains
+small or favorable with further grid refinement. No adaptive cutoff switching
+is used. Images share a reference vorticity scale with saturation outside it;
+no smoothing of computed fields is applied.
+
+REPRODUCE
+From archive root compile the two kernels:
+ g++ -O3 -march=native -fopenmp -shared -fPIC carleman_c2/factors.cpp -o carleman_c2/factors.so
+ g++ -O3 -march=native -fopenmp -shared -fPIC carleman_c2/factors_fast.cpp -o carleman_c2/factors_fast.so
+Then run:
+ python3 spectral_preparation/sweep.py --pilot
+ python3 spectral_preparation/sweep.py
+ python3 spectral_preparation/run_c2.py --K 14
+ python3 spectral_preparation/run_c2.py --K 22
+ python3 spectral_preparation/run_c2.py --K 28
+ python3 spectral_preparation/analyze.py
+Large C2 cases should run sequentially on an8GB worker. Python,numpy,scipy,
+pandas,matplotlib,C++/OpenMP required. Prior K12 baseline data and all model
+sources are included. The imported TG initialization is overridden by the
+DSL experiment's active.initial and U=.08.

@@ -1,0 +1,13 @@
+{
+  "N": 64,
+  "Nc": 32,
+  "Re": 100000,
+  "K": 22,
+  "steps_completed": 2400,
+  "time": 3.0,
+  "failed": null,
+  "seconds": 323.01398515701294,
+  "factor_columns": 4801,
+  "factor_buffer_bytes": 1888616448,
+  "population_workspace_bytes": 1416462336
+}

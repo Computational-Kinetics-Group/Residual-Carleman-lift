@@ -1,0 +1,17 @@
+{
+  "K12_C1_agreement_pp": 2.6645352591003757e-14,
+  "K12_quadratic_agreement_pp": 1.0061396160665481e-16,
+  "K12_reference_difference": 0.0,
+  "K14_C1_agreement_pp": 3.197442310920451e-14,
+  "K14_quadratic_agreement_pp": 9.974659986866641e-17,
+  "K14_reference_difference": 0.0,
+  "K22_C1_agreement_pp": 6.217248937900877e-15,
+  "K22_quadratic_agreement_pp": 1.2197274440461925e-19,
+  "K22_reference_difference": 0.0,
+  "K28_C1_agreement_pp": 8.326672684688674e-16,
+  "K28_quadratic_agreement_pp": 4.2351647362715017e-20,
+  "K28_reference_difference": 0.0,
+  "pilot_K12_C1_agreement_pp": 4.884981308350689e-15,
+  "pilot_K12_quadratic_agreement_pp": 4.0657581468206416e-20,
+  "full_projector_max_background_error_percent": 1.8160669734551143e-09
+}

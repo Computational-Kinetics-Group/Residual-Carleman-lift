@@ -1,0 +1,5 @@
+tolerance_percent,coarse_K,rule,fine_K,fine_C1_peak,passes_C1_tolerance
+5.0,11,same physical K,11,43.69056521605647,False
+5.0,11,same spectral fraction,22,3.2103286841727,True
+1.0,14,same physical K,14,24.59999766811457,False
+1.0,14,same spectral fraction,28,0.3664833799807949,True

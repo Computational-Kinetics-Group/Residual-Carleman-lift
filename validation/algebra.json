@@ -1,0 +1,9 @@
+{
+  "dense_pair_max_abs_error": 4.0657581468206416e-20,
+  "coincident_transfer_max_abs_error": 4.440892098500626e-16,
+  "kernels": [
+    "standard",
+    "fast"
+  ],
+  "steps": 5
+}

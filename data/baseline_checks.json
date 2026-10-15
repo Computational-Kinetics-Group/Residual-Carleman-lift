@@ -1,0 +1,31 @@
+{
+  "N": 64,
+  "Re": 100000.0,
+  "U": 0.08,
+  "steps": 2400,
+  "final_time": 3.0,
+  "fixed_background": "uniform unit-density rest equilibrium",
+  "pair_factorization": "exact rank one; u=A_*^n x0",
+  "forcing": 0,
+  "restarts": false,
+  "reference_snapshot_max_abs_difference": 0.0,
+  "rest_fixed_point_max_abs": 1.1102230246251565e-16,
+  "final_errors_percent": {
+    "C1": 64.70678976836328,
+    "C2": 87.34295657512989,
+    "quadratic_direct": 0.7579218670982987
+  },
+  "peak_errors_percent": {
+    "C1": 94.45396918412605,
+    "C2": 102.05930360126142,
+    "quadratic_direct": 0.8047647030100673
+  },
+  "first_C2_crossings": {
+    "0.1": 0.015,
+    "1": 0.15375,
+    "5": 0.33125,
+    "10": 0.445
+  },
+  "quadratic_failed_step": null,
+  "seconds": 6.3965113162994385
+}
